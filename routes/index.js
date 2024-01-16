@@ -1,7 +1,7 @@
-const express = require('express')
-const route = require('./userRoute')
-
-
+import  express  from 'express'
+import * as userRoute from './userRoute.js'
+import * as todoRoute from './todoRoute.js'
+import * as authRoute from './authRoute.js'
 
 const app = express()
 
@@ -9,11 +9,13 @@ app.use(express.json())
 
 
 const allRouters = [
-    [require('./userRoute')]
+    [userRoute.route],
+    [todoRoute.route],
+    [authRoute.authRoute]
 ]
 
 for (const router of allRouters){
-    app.use(router[0])
+    console.log(router);
+    app.use(router)
 }
-
-module.exports = app
+export  {app}

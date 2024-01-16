@@ -1,7 +1,8 @@
-require("dotenv").config();
-const express = require('express')
-const app = require('./routes/')
-const { sequelize } = require("./models/index.js");
+import dotenv from "dotenv"
+dotenv.config()
+import express  from 'express'
+import {app} from'./routes/index.js'
+import  {db}  from "./models/index.js"
 const SERVER_PORT = process.env.SERVER_PORT || 8000;
 
 
@@ -10,11 +11,10 @@ const SERVER_PORT = process.env.SERVER_PORT || 8000;
 
 
 
-app.use(express.json())
 const dbConnection = async () => {
   console.log("trying connect to database...");
   try {
-    await sequelize.authenticate();
+    await db.sequelize.authenticate();
     console.log("database connection established");
   } catch (error) {
     console.log("connection faild!", error);

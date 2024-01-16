@@ -1,19 +1,17 @@
-const models = require("../models");
-const User = models.sequelize.models.User;
-const sequelize = models.sequelize;
-exports.allUsers = async (req, res, next) => {
+import  {db} from "../models/index.js"
+const User = db.User
+const allUsers = async (req, res, next) => {
   try {
     const users = await User.findAll();
     if (users) {
       return res.json({ user: users }).status(200);
-      console.log(users.length);
     }
   } catch (error) {
     console.log(`error occured msg: ${error}`);
   }
 };
 
-exports.createUser = async (req, res) => {
+const createUser = async (req, res) => {
   try {
     const { userName, password, email } = req.body;
     const createdUser = await User.create({
@@ -33,10 +31,9 @@ exports.createUser = async (req, res) => {
   }
 };
 
-exports.deleteUser = async (req, res) => {
+const deleteUser = async (req, res) => {
   try {
     const userId = req.params;
-    console.log(userId);
     const deleteduser = await User.destroy({
       where: {
         id: Number(userId.id),
@@ -52,13 +49,22 @@ exports.deleteUser = async (req, res) => {
   }
 };
 
-exports.updateInfo = async (req, res) => {
+const updateInfo = async (req, res) => {
   try {
     const userid = req.params;
     const { email, password } = req.body;
     const existeduser = await User.findByPk(Number(userid.id));
     if (existeduser) {
-      const updateduser = await User.update
+      if(email){
+        existeduser.email = email
+        await existeduser.save()
+        res.json({msg: `email succesfully updated with ${email}`}).status(200)
+      }
+      if(password) {
+        existeduser.password_hash = password
+        await existeduser.save()
+        res.json({msg: 'password succesfully save not hashed yet!'})
+      }
     } else {
       return res.json({ msg: `with this id: ${userid.id} user not existed` }).status(404)
     }
@@ -68,3 +74,6 @@ exports.updateInfo = async (req, res) => {
     });
   }
 };
+
+
+export {createUser, allUsers, deleteUser, updateInfo}

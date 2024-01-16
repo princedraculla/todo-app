@@ -1,8 +1,8 @@
 'use strict';
-const {
+import  {
   Model
-} = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
+}  from 'sequelize';
+export default (sequelize, DataTypes) => {
   class Todos extends Model {
     /**
      * Helper method for defining associations.
@@ -15,21 +15,27 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Todos.init({
-    id: {
-      type: DataTypes.INTEGER,
-      autoIncrement: true,
-      unique: true,
-      primaryKey: true
+    id:{type: DataTypes.INTEGER,
+    primaryKey:true,
+    allowNull:false,
+    autoIncrement:true
     },
-    userId: DataTypes.INTEGER,
-    isDone: DataTypes.BOOLEAN,
+    userId:{type: DataTypes.INTEGER,
+    references:{
+      model: 'User',
+      key: 'id'
+    }
+    },
+    isDone: {type:DataTypes.BOOLEAN,
+    defaultValue:false
+    },
     title: DataTypes.STRING,
-    content: DataTypes.STRING
+    content: DataTypes.STRING,
   }, {
-    freezeTableName:true,
-    timestamps: true,
-    underscored: true,
     sequelize,
+    freezeTableName: true,
+    timestamps: false,
+    underscored: false,
     modelName: 'Todos',
   });
   return Todos;
