@@ -1,9 +1,18 @@
 import {db} from "../models/index.js";
 const todoModel = db.Todos
 const userModel = db.User
+
+
+/**
+ * indexig all todos for one user
+ * @param {Request} req 
+ * @param {Response} res 
+ * @returns {JSON} - Json file all todos from Todo Model
+ */
 const allTodos = async (req, res) => {
   try {
     await todoModel.sync();
+    //requirement for search 
     const { userId } = req.params;
     console.log(userId);
     const userAccess = await todoModel.findOne({
@@ -12,7 +21,7 @@ const allTodos = async (req, res) => {
       },
     });
     if (!userAccess) {
-      res.json({ msg: "you dont have access or task" });
+      res.json({ msg: "you dont have task" });
       return;
     } else {
       const todosUser = await todoModel.findAll();
@@ -25,8 +34,16 @@ const allTodos = async (req, res) => {
   }
 };
 
+
+/**
+ * async function for creating task by user
+ * @param {Request} req 
+ * @param {Response} res 
+ * @returns {JSON} message user for state of opration
+ */
 const createTodo = async (req, res) => {
   try {
+    //requirement of creating todos
     const { userID } = req.params;
     const { title, content } = req.body;
     console.log(title, content);
@@ -59,8 +76,17 @@ const createTodo = async (req, res) => {
   }
 };
 
+
+
+/**
+ * Async function for updating a specific task
+ * @param {Request} req 
+ * @param {Response} res 
+ * @returns {JSON} message to user state of updating opration
+ */
 const updateTodo = async (req, res) => {
   try {
+    // requirement of updating oprationf for todos
     const { userID } = req.params;
     const { isDone, title, content, id } = req.body;
     await todoModel.sync();

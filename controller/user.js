@@ -1,6 +1,16 @@
 import  {db} from "../models/index.js"
 const User = db.User
-const allUsers = async (req, res, next) => {
+
+
+
+
+/**
+ * async fondton for indexing all users for SuperUser
+ * @param {Request} req 
+ * @param {Response} res 
+ * @returns {JSON} list of user if was success opration
+ */
+const allUsers = async (req, res) => {
   try {
     const users = await User.findAll();
     if (users) {
@@ -11,6 +21,13 @@ const allUsers = async (req, res, next) => {
   }
 };
 
+
+
+/**
+ * async function creating user same ass Register of AUth
+ * @param {Request} req requirement of creating user data in DB
+ * @param {Response} res 
+ */
 const createUser = async (req, res) => {
   try {
     const { userName, password, email } = req.body;
@@ -31,6 +48,13 @@ const createUser = async (req, res) => {
   }
 };
 
+
+
+/**
+ * async function fo deleting exist user
+ * @param {Request} req 
+ * @param {Response} res 
+ */
 const deleteUser = async (req, res) => {
   try {
     const userId = req.params;
@@ -49,6 +73,15 @@ const deleteUser = async (req, res) => {
   }
 };
 
+
+/**
+ * may some User want changing theyre informaion
+ * async function for updating informaion of user 
+ *  >> changing password for more security concern
+ * @param {Request} req 
+ * @param {Response} res 
+ * @returns {JSON} -> message for state of opration  
+ */
 const updateInfo = async (req, res) => {
   try {
     const userid = req.params;
