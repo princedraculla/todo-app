@@ -48,7 +48,7 @@ const register = async (req, res) => {
  *
  * @param {Request} req
  * @param {Response} res
- * @returns {Json} // message to user for valid data and successfully opration of login
+ * @returns {JSON} // message to user for valid data and successfully opration of login
  */
 const login = async (req, res) => {
   try {
