@@ -6,7 +6,7 @@ export default{
     username: "torkash",
     password: "torkash1234",
     host: "localhost",
-    port: 5432,
+    port: 5433,
     dialect: "postgres",
     rejectOptions: {
       ssl: {
