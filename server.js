@@ -21,12 +21,12 @@ const option = {
       },
     ],
   },
-  apis:["./routes/*.js"]
+  apis: ["./routes/*.js"],
 };
 
-import swaggerDocument from './swagger/swagger.json' assert { type: "json" };;
-const specs = swaggerJsDoc(option)
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
+import swaggerDocument from "./swagger/swagger.json" assert { type: "json" };
+const specs = swaggerJsDoc(option);
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 /**
  * async function for connect sequelize to
  * the database we config
